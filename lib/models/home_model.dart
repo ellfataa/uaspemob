@@ -9,7 +9,6 @@ class Barang {
     required this.hargaBarang,
   });
 
-  // Konversi dari JSON
   factory Barang.fromJson(Map<String, dynamic> json) {
     return Barang(
       idBarang: int.parse(json['id_barang']),
@@ -18,7 +17,6 @@ class Barang {
     );
   }
 
-  // Konversi ke JSON
   Map<String, dynamic> toJson() {
     return {
       'id_barang': idBarang.toString(),
@@ -27,3 +25,4 @@ class Barang {
     };
   }
 }
+

@@ -12,7 +12,6 @@ class RegisterController {
         body: user.toJson(),
       );
 
-      // Parse response dari API
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         return data;

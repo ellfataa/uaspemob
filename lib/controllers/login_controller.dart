@@ -18,7 +18,6 @@ class LoginController extends GetxController {
 
     isLoading.value = true;
     try {
-      // Kirim permintaan ke API
       final response = await http.post(
         Uri.parse(apiUrl),
         body: {

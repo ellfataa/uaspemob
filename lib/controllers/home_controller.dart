@@ -4,12 +4,12 @@ import 'dart:convert';
 import '../models/home_model.dart';
 
 class HomeController extends GetxController {
-  var barangList = <Barang>[].obs; // Daftar barang
-  var isLoading = false.obs; // Indikator loading
+  var barangList = <Barang>[].obs;
+  var isLoading = false.obs;
 
-  final String apiUrl = 'http://192.168.18.7/uas/lihat.php'; // API URL
+  final String apiUrl = 'http://192.168.18.7/uas/lihat.php';
+  final String deleteUrl = 'http://192.168.18.7/uas/hapus.php';
 
-  // Fetch barang dari server
   Future<void> fetchBarang() async {
     isLoading.value = true;
     try {
@@ -30,6 +30,23 @@ class HomeController extends GetxController {
       print("Error fetching barang: $e");
     } finally {
       isLoading.value = false;
+    }
+  }
+
+  // Menghapus barang berdasarkan ID
+  Future<void> deleteBarang(int idBarang) async {
+    try {
+      final response = await http.get(Uri.parse('$deleteUrl?id_barang=$idBarang'));
+      final data = json.decode(response.body);
+      if (data['status'] == 'success') {
+        barangList.removeWhere((barang) => barang.idBarang == idBarang);
+        Get.snackbar('Berhasil', data['message'], snackPosition: SnackPosition.BOTTOM);
+      } else {
+        Get.snackbar('Gagal', data['message'], snackPosition: SnackPosition.BOTTOM);
+      }
+    } catch (e) {
+      print("Error deleting barang: $e");
+      Get.snackbar('Error', 'Gagal menghapus barang', snackPosition: SnackPosition.BOTTOM);
     }
   }
 }

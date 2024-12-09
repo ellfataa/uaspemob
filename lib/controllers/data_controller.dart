@@ -7,16 +7,14 @@ class DataController extends GetxController {
   var isLoading = false.obs;
 
   final String apiUrl =
-      "http://192.168.18.7/uas/tambah.php"; // Sesuaikan dengan URL server Anda
+      "http://192.168.18.7/uas/tambah.php";
 
-  // Fungsi untuk mengirim data barang ke server
   Future<bool> tambahBarang(List<Barang> barangList) async {
     isLoading.value = true;
 
     try {
-      // Mempersiapkan data untuk dikirim ke server
       List<Map<String, dynamic>> dataBarang = barangList.map((barang) {
-        return barang.toJson(); // Mengonversi objek Barang ke format JSON
+        return barang.toJson();
       }).toList();
 
       final response = await http.post(
@@ -25,7 +23,6 @@ class DataController extends GetxController {
         body: jsonEncode({'barang': dataBarang}),
       );
 
-      // Memeriksa status response dari server
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
 
@@ -34,7 +31,7 @@ class DataController extends GetxController {
           Get.snackbar('Success', responseData['message']);
           return true;
         } else {
-          // Menampilkan pesan kesalahan dari server
+          // Menampilkan pesan kesalahan
           Get.snackbar('Error', responseData['message']);
           return false;
         }

@@ -7,7 +7,6 @@ class Barang {
     required this.hargaBarang,
   });
 
-  // Fungsi untuk mengonversi objek Barang ke dalam format JSON
   Map<String, dynamic> toJson() {
     return {
       'nama_barang': namaBarang,
@@ -15,7 +14,6 @@ class Barang {
     };
   }
 
-  // Fungsi untuk membuat objek Barang dari JSON
   factory Barang.fromJson(Map<String, dynamic> json) {
     return Barang(
       namaBarang: json['nama_barang'],
